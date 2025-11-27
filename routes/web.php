@@ -10,9 +10,10 @@ Route::middleware([
     'auth',
     ValidateSessionWithWorkOS::class,
 ])->group(function () {
+
     Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->middleware('can:dashboard');
 });
 
 require __DIR__.'/settings.php';
