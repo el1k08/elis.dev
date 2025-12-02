@@ -28,8 +28,6 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             $table->timestamps();
-
-            $table->index(['attachable_type', 'attachable_id']);
         });
     }
 
