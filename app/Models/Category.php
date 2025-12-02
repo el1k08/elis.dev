@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use BelongsToUser;
+
     protected $fillable = [
         'user_id', 'name', 'slug', 'description',
         'icon', 'color', 'type', 'parent_id',

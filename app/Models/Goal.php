@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Goal extends Model
 {
+    use BelongsToUser;
+
     protected $fillable = [
         'user_id', 'account_id', 'name', 'description',
         'target_amount', 'current_amount', 'currency',
