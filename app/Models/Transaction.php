@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
@@ -10,9 +11,11 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id', 'type', 'amount', 'currency', 'transaction_date',
-        'category_id', 'account_id', 'description', 'notes', 'merchant',
-        'reference', 'related_transaction_id', 'to_account_id',
-        'recurring_template_id', 'is_recurring', 'status', 'metadata', 'tags'
+        'category_id', 'account_id', 'description', 'notes',
+        'merchant', 'reference',
+        'related_transaction_id', 'to_account_id',
+        'recurring_template_id', 'is_recurring',
+        'status', 'metadata', 'tags',
     ];
 
     protected $casts = [
@@ -23,15 +26,9 @@ class Transaction extends Model
         'tags' => 'array',
     ];
 
-    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
     }
 
     public function account()
@@ -44,30 +41,30 @@ class Transaction extends Model
         return $this->belongsTo(Account::class, 'to_account_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function recurringTemplate()
+    {
+        return $this->belongsTo(RecurringTemplate::class);
+    }
+
     public function relatedTransaction()
     {
         return $this->belongsTo(Transaction::class, 'related_transaction_id');
     }
 
-    // Scopes
-    public function scopeIncome($query)
+    // Polymorphic
+    public function tagsMorph()
     {
-        return $query->where('type', 'income');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    public function scopeExpense($query)
+    public function attachments()
     {
-        return $query->where('type', 'expense');
-    }
-
-    public function scopeInDateRange($query, $startDate, $endDate)
-    {
-        return $query->whereBetween('transaction_date', [$startDate, $endDate]);
-    }
-
-    // Helper methods
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2) . ' ' . $this->currency;
+        return $this->morphMany(Attachment::class, 'attachable');
     }
 }
+

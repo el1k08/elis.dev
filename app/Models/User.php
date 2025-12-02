@@ -22,6 +22,12 @@ class User extends Authenticatable
         'email',
         'workos_id',
         'avatar',
+        'default_currency',
+        'timezone',
+        'locale',
+        'date_format',
+        'financial_year_start',
+        'monthly_budget',
     ];
 
     /**
@@ -46,5 +52,56 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    // Relations
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function recurringTemplates()
+    {
+        return $this->hasMany(RecurringTemplate::class);
+    }
+
+    public function budgets()
+    {
+        return $this->hasMany(Budget::class);
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function savedReports()
+    {
+        return $this->hasMany(SavedReport::class);
     }
 }
