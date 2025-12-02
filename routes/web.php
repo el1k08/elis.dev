@@ -3,16 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\WorkOS\Http\Middleware\ValidateSessionWithWorkOS;
+use App\Http\Controllers\AccountController;
 
-Route::get('/', fn () => Inertia::render('Welcome'));
+Route::get('/', fn () => Inertia::render('Home'));
 
 Route::middleware([
     'auth',
     ValidateSessionWithWorkOS::class,
 ])->group(function () {
+
     Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('accounts', function () {
+        return Inertia::render('Accounts');
+    })->name('accounts');
+
 });
 
 Route::get('/env-debug', function () {
