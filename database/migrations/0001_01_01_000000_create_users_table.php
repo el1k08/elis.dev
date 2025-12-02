@@ -20,6 +20,16 @@ return new class extends Migration
             $table->rememberToken();
             $table->text('avatar');
             $table->timestamps();
+
+            // Profile settings
+            $table->string('default_currency', 3)->default('CAD');
+            $table->string('timezone')->default('America/St_Johns');
+            $table->string('locale')->default('en');
+            $table->enum('date_format', ['Y-m-d', 'd/m/Y', 'm/d/Y'])->default('Y-m-d');
+
+            // Financial settings
+            $table->date('financial_year_start')->nullable(); // financial year start date
+            $table->decimal('monthly_budget', 15, 2)->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
@@ -30,6 +40,8 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+
     }
 
     /**
