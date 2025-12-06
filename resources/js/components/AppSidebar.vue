@@ -11,10 +11,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, accounts } from '@/routes';
+import { dashboard, accounts, worker } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, WalletCards } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, WalletCards, BriefcaseBusiness } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -26,7 +26,11 @@ const mainNavItems: NavItem[] = [
         title: 'Accounts',
         href: accounts(),
         icon: WalletCards,
-    },
+    },{
+        title: 'Worker',
+        href: worker(),
+        icon: BriefcaseBusiness,
+    }
 ];
 
 const footerNavItems: NavItem[] = [

@@ -20,6 +20,10 @@ Route::middleware([
         return Inertia::render('Accounts');
     })->name('accounts');
 
+    Route::get('worker', function () {
+        return Inertia::render('Worker');
+    })->name('worker');
+
 });
 
 Route::get('/env-debug', function () {
