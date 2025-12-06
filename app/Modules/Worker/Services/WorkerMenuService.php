@@ -130,24 +130,4 @@ class WorkerMenuService
 
         return true;
     }
-
-    public static function showActiveShift($chatId, $shift)
-    {
-        $text = "⏱️ *Active Shift*\n\n";
-        $text .= "Started time: `" . $shift->start_time->format('H:i') . "`\n";
-        $text .= "Date: `" . $shift->start_time->format('d.m.Y') . "`\n";
-
-        $duration = now()->diffInMinutes($shift->start_time);
-        $hours = floor($duration / 60);
-        $minutes = $duration % 60;
-        $text .= "Duration: `" . $hours . " hours " . $minutes . " minutes (" . number_format($hours + ($minutes / 60), 1) . ")`\n";
-
-        Telegram::sendMessage([
-            'chat_id' => $chatId,
-            'text' => $text,
-            'parse_mode' => 'Markdown',
-        ]);
-
-        return true;
-    }
 }
